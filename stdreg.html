@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Registration Page</title>
+
+    <style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:linear-gradient(135deg,#74b9ff,#a29bfe);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+form{
+    width:400px;
+    background:#fff;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+h1{
+    text-align:center;
+    color:#2c3e50;
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    margin-top:12px;
+    margin-bottom:5px;
+    font-weight:bold;
+    color:#444;
+}
+
+input,
+select{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+    font-size:15px;
+}
+
+input:focus,
+select:focus{
+    border:1px solid #007BFF;
+    outline:none;
+}
+
+input[type="submit"]{
+    margin-top:20px;
+    background:#007BFF;
+    color:white;
+    border:none;
+    padding:12px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    border-radius:6px;
+}
+
+input[type="submit"]:hover{
+    background:#00b345;
+}
+</style>
+
+    <script>
+        function validate() {
+
+            var firstname = document.getElementById("firstname").value;
+            var lastname = document.getElementById("lastname").value;
+            var rollno = document.getElementById("rollno").value;
+            var dob = document.getElementById("dob").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            var confirm_password = document.getElementById("confirm_password").value;
+            var number = document.getElementById("number").value;
+
+            if(firstname=="" || lastname=="" || rollno=="" || dob=="" ||
+               email=="" || password=="" || confirm_password=="" || number=="")
+            {
+                alert("All fields are required.");
+                return false;
+            }
+
+            if(firstname.length < 3){
+                alert("First Name must be at least 3 characters.");
+                return false;
+            }
+
+            if(lastname.length < 3){
+                alert("Last Name must be at least 3 characters.");
+                return false;
+            }
+
+            if(email.indexOf("@") == -1){
+                alert("Enter a valid Email.");
+                return false;
+            }
+
+            if(password.length < 6){
+                alert("Password must be at least 6 characters.");
+                return false;
+            }
+
+            if(password != confirm_password){
+                alert("Passwords do not match.");
+                return false;
+            }
+
+            if(number.length != 10 || isNaN(number)){
+                alert("Phone Number must contain 10 digits.");
+                return false;
+            }
+
+            alert("Thank you for registering!");
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+
+<form onsubmit="return validate()">
+
+    <h1>Student Registration</h1>
+
+    <label>First Name</label>
+    <input type="text" id="firstname" placeholder="Enter First Name">
+
+    <label>Last Name</label>
+    <input type="text" id="lastname" placeholder="Enter Last Name">
+
+    <label>Roll Number</label>
+    <input type="text" id="rollno" placeholder="Enter Roll Number">
+
+    <label>Date of Birth</label>
+    <input type="date" id="dob">
+
+    <label>Gender</label>
+    <select id="gender">
+        <option>Select Gender</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+    </select>
+
+    <label>Email</label>
+    <input type="email" id="email" placeholder="Enter Email">
+
+    <label>Password</label>
+    <input type="password" id="password" placeholder="Enter Password">
+
+    <label>Confirm Password</label>
+    <input type="password" id="confirm_password" placeholder="Confirm Password">
+
+    <label>Phone Number</label>
+    <input type="text" id="number" placeholder="Enter Phone Number">
+
+    <input type="submit" value="Register">
+
+</form>
+
+</body>
+</html>
