@@ -1,17 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Student Registration Page</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Registration Page</title>
 
-    <style>
+<style>
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
 body{
-    font-family:Arial, Helvetica, sans-serif;
     background:linear-gradient(135deg,#74b9ff,#a29bfe);
     display:flex;
     justify-content:center;
@@ -20,23 +23,22 @@ body{
 }
 
 form{
-    width:400px;
-    background:#fff;
+    width:420px;
+    background:white;
     padding:25px;
     border-radius:12px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+    box-shadow:0 10px 20px rgba(0,0,0,.2);
 }
 
 h1{
     text-align:center;
-    color:#2c3e50;
     margin-bottom:20px;
+    color:#2c3e50;
 }
 
 label{
     display:block;
     margin-top:12px;
-    margin-bottom:5px;
     font-weight:bold;
     color:#444;
 }
@@ -45,6 +47,7 @@ input,
 select{
     width:100%;
     padding:10px;
+    margin-top:5px;
     border:1px solid #ccc;
     border-radius:6px;
     font-size:15px;
@@ -52,121 +55,193 @@ select{
 
 input:focus,
 select:focus{
-    border:1px solid #007BFF;
     outline:none;
+    border-color:#007BFF;
+}
+
+.password-box{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.password-box input{
+    flex:1;
+}
+
+.password-box button{
+    padding:10px;
+    border:none;
+    background:#007BFF;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.password-box button:hover{
+    background:#0056b3;
+}
+
+.buttons{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+.buttons input{
+    width:50%;
+    border:none;
+    color:white;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
 }
 
 input[type="submit"]{
-    margin-top:20px;
     background:#007BFF;
-    color:white;
-    border:none;
-    padding:12px;
-    font-size:16px;
-    font-weight:bold;
-    cursor:pointer;
-    border-radius:6px;
 }
 
 input[type="submit"]:hover{
-    background:#00b345;
+    background:#0056b3;
 }
+
+input[type="reset"]{
+    background:#dc3545;
+}
+
+input[type="reset"]:hover{
+    background:#b02a37;
+}
+
 </style>
 
-    <script>
-        function validate() {
+<script>
 
-            var firstname = document.getElementById("firstname").value;
-            var lastname = document.getElementById("lastname").value;
-            var rollno = document.getElementById("rollno").value;
-            var dob = document.getElementById("dob").value;
-            var email = document.getElementById("email").value;
-            var password = document.getElementById("password").value;
-            var confirm_password = document.getElementById("confirm_password").value;
-            var number = document.getElementById("number").value;
+function togglePassword(){
 
-            if(firstname=="" || lastname=="" || rollno=="" || dob=="" ||
-               email=="" || password=="" || confirm_password=="" || number=="")
-            {
-                alert("All fields are required.");
-                return false;
-            }
+    var pass=document.getElementById("password");
 
-            if(firstname.length < 3){
-                alert("First Name must be at least 3 characters.");
-                return false;
-            }
+    if(pass.type==="password")
+        pass.type="text";
+    else
+        pass.type="password";
 
-            if(lastname.length < 3){
-                alert("Last Name must be at least 3 characters.");
-                return false;
-            }
+}
 
-            if(email.indexOf("@") == -1){
-                alert("Enter a valid Email.");
-                return false;
-            }
+function validate(){
 
-            if(password.length < 6){
-                alert("Password must be at least 6 characters.");
-                return false;
-            }
+    var firstname=document.getElementById("firstname").value.trim();
+    var lastname=document.getElementById("lastname").value.trim();
+    var rollno=document.getElementById("rollno").value.trim();
+    var dob=document.getElementById("dob").value;
+    var gender=document.getElementById("gender").value;
+    var email=document.getElementById("email").value.trim();
+    var password=document.getElementById("password").value;
+    var confirm=document.getElementById("confirm_password").value;
+    var phone=document.getElementById("number").value.trim();
 
-            if(password != confirm_password){
-                alert("Passwords do not match.");
-                return false;
-            }
+    var emailPattern=/^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+    var namePattern=/^[A-Za-z]+$/;
+    var phonePattern=/^[0-9]{10}$/;
+    var passPattern=/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{6,}$/;
 
-            if(number.length != 10 || isNaN(number)){
-                alert("Phone Number must contain 10 digits.");
-                return false;
-            }
+    if(firstname==""||lastname==""||rollno==""||dob==""||email==""||password==""||confirm==""||phone==""){
+        alert("Please fill all fields.");
+        return false;
+    }
 
-            alert("Thank you for registering!");
-            return true;
-        }
-    </script>
+    if(!namePattern.test(firstname)){
+        alert("First Name should contain only alphabets.");
+        return false;
+    }
+
+    if(!namePattern.test(lastname)){
+        alert("Last Name should contain only alphabets.");
+        return false;
+    }
+
+    if(gender=="Select Gender"){
+        alert("Please select Gender.");
+        return false;
+    }
+
+    if(!emailPattern.test(email)){
+        alert("Invalid Email.");
+        return false;
+    }
+
+    if(!passPattern.test(password)){
+        alert("Password must contain at least 6 characters including one uppercase, one lowercase and one number.");
+        return false;
+    }
+
+    if(password!=confirm){
+        alert("Passwords do not match.");
+        return false;
+    }
+
+    if(!phonePattern.test(phone)){
+        alert("Phone Number should contain exactly 10 digits.");
+        return false;
+    }
+
+    alert("Registration Successful!");
+
+    return true;
+
+}
+
+</script>
+
 </head>
 
 <body>
 
 <form onsubmit="return validate()">
 
-    <h1>Student Registration</h1>
+<h1>Student Registration</h1>
 
-    <label>First Name</label>
-    <input type="text" id="firstname" placeholder="Enter First Name">
+<label>First Name</label>
+<input type="text" id="firstname" placeholder="Enter First Name" required>
 
-    <label>Last Name</label>
-    <input type="text" id="lastname" placeholder="Enter Last Name">
+<label>Last Name</label>
+<input type="text" id="lastname" placeholder="Enter Last Name" required>
 
-    <label>Roll Number</label>
-    <input type="text" id="rollno" placeholder="Enter Roll Number">
+<label>Roll Number</label>
+<input type="text" id="rollno" placeholder="Enter Roll Number" required>
 
-    <label>Date of Birth</label>
-    <input type="date" id="dob">
+<label>Date of Birth</label>
+<input type="date" id="dob" required>
 
-    <label>Gender</label>
-    <select id="gender">
-        <option>Select Gender</option>
-        <option>Male</option>
-        <option>Female</option>
-        <option>Other</option>
-    </select>
+<label>Gender</label>
 
-    <label>Email</label>
-    <input type="email" id="email" placeholder="Enter Email">
+<select id="gender" required>
+<option>Select Gender</option>
+<option>Male</option>
+<option>Female</option>
+<option>Other</option>
+</select>
 
-    <label>Password</label>
-    <input type="password" id="password" placeholder="Enter Password">
+<label>Email</label>
+<input type="email" id="email" placeholder="Enter Email" required>
 
-    <label>Confirm Password</label>
-    <input type="password" id="confirm_password" placeholder="Confirm Password">
+<label>Password</label>
 
-    <label>Phone Number</label>
-    <input type="text" id="number" placeholder="Enter Phone Number">
+<div class="password-box">
+<input type="password" id="password" placeholder="Enter Password" required>
+<button type="button" onclick="togglePassword()">Show</button>
+</div>
 
-    <input type="submit" value="Register">
+<label>Confirm Password</label>
+<input type="password" id="confirm_password" placeholder="Confirm Password" required>
+
+<label>Phone Number</label>
+<input type="text" id="number" placeholder="Enter Phone Number" maxlength="10" required>
+
+<div class="buttons">
+<input type="submit" value="Register">
+<input type="reset" value="Reset">
+</div>
 
 </form>
 
